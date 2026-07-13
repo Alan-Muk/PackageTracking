@@ -1,57 +1,278 @@
-#  AfterShip Tracking Dashboard
+# AfterShip Tracking Dashboard
 
-This project lets you track shipments in real time, store tracking history, and visualize delivery status in a clean dashboard UI.
+![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=nextdotjs)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![Node.js](https://img.shields.io/badge/Node.js-Backend-339933?logo=node.js)
+![Express](https://img.shields.io/badge/Express.js-API-000000?logo=express)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+A shipment tracking platform that integrates with AfterShip to provide real-time delivery updates, tracking history, and shipment analytics through a modern dashboard interface.
+
+The system demonstrates:
+
+- event-driven backend architecture
+- webhook-based integrations
+- REST API design
+- database persistence
+- full-stack application development
+
+Built using:
+
+- Next.js
+- Express.js
+- PostgreSQL
+- Prisma
+- Docker
+- AfterShip API
+
+---
+
+# Overview
+
+AfterShip Tracking Dashboard provides a centralized interface for managing and monitoring shipments.
+
+The application workflow:
+
+```text
+User Dashboard
+
+      ↓
+
+Next.js Frontend
+
+      ↓
+
+Express API
+
+      ↓
+
+AfterShip Integration
+
+      ↓
+
+Webhook Events
+
+      ↓
+
+PostgreSQL Database
+
+      ↓
+
+Dashboard Updates
+```
+
+Instead of continuously polling shipment providers, the system uses webhook events to receive shipment changes as they occur.
+
+---
+
+# Problem
+
+Shipment tracking systems need reliable communication between external providers and internal applications.
+
+A scalable tracking platform must handle:
+
+- external API integration
+- asynchronous status updates
+- persistent shipment history
+- duplicate event handling
+- user-facing visualization
+
+This project explores how event-driven systems solve these challenges.
+
+---
+
+# Architecture
+
+```text
+                 Next.js Dashboard
+
+                        |
+
+                        ↓
+
+                 Express API Layer
+
+                  /            \
+
+                 ↓              ↓
+
+        AfterShip API       PostgreSQL
+
+                 
+
+                 ↓
+
+          Webhook Event Stream
+```
+
+---
+
+# Components
+
+## Next.js Frontend
+
+Responsible for:
+
+- dashboard interface
+- shipment creation
+- tracking visualization
+- API communication
+
+Features:
+
+- modern React architecture
+- responsive UI
+- server/client component separation
+
+---
+
+## Express Backend
+
+Acts as the application API layer.
+
+Responsibilities:
+
+- REST endpoint handling
+- AfterShip communication
+- webhook processing
+- validation
+- business logic
+
+---
+
+## AfterShip Integration
+
+Provides:
+
+- shipment tracking
+- carrier communication
+- delivery status updates
+
+The application communicates with AfterShip through:
+
+- API requests for tracking creation
+- webhooks for status changes
+
+---
+
+## PostgreSQL Database
+
+Stores:
+
+- shipment records
+- tracking numbers
+- carrier information
+- status history
+- timestamps
+
+Prisma provides:
+
+- database schema management
+- type-safe queries
+- migrations
+
+---
+
+# Event Flow
+
+```text
+1. User creates shipment tracking
+
+            ↓
+
+2. Backend registers tracking with AfterShip
+
+            ↓
+
+3. AfterShip monitors shipment
+
+            ↓
+
+4. Shipment status changes
+
+            ↓
+
+5. Webhook event sent to backend
+
+            ↓
+
+6. Backend validates and stores update
+
+            ↓
+
+7. Dashboard displays latest status
+```
 
 ---
 
 # Features
 
-*  Add and track shipments via AfterShip
-*  Real-time updates via webhooks
-*  Persistent storage with PostgreSQL
-*  Fast UI with Next.js App Router
-*  REST API with Express
-*  Dockerized for easy local development
+## Shipment Tracking
 
----
+Users can:
 
-# Tech Stack
+- add shipments
+- monitor delivery progress
+- view tracking history
 
-* **Frontend:** Next.js (React)
-* **Backend:** Node.js + Express
-* **Database:** PostgreSQL
-* **ORM:** Prisma
-* **API:** AfterShip
+Supported workflow:
 
----
+```text
+Carrier
 
-# Project Structure
+↓
 
-```
-aftership-dashboard/
-├── apps/
-│   ├── web/        # Next.js frontend
-│   └── api/        # Express backend
-├── packages/
-│   └── db/         # Prisma schema & client
-├── docker-compose.yml
-├── .env.example
-└── README.md
+Tracking Number
+
+↓
+
+Shipment Status
 ```
 
 ---
 
+## Webhook-Based Updates
 
+The application uses event-driven updates instead of polling.
 
-# API Endpoints
+Benefits:
 
-# Create tracking
+- lower API usage
+- faster updates
+- better scalability
+- reduced system overhead
 
-```
+---
+
+## Persistent Tracking History
+
+All shipment events are stored.
+
+This enables:
+
+- historical tracking
+- delivery analytics
+- debugging
+- reporting
+
+---
+
+## REST API
+
+Example endpoints:
+
+---
+
+## Create Tracking
+
+```http
 POST /trackings
 ```
 
-Body:
+Request:
 
 ```json
 {
@@ -62,62 +283,253 @@ Body:
 
 ---
 
-# Get all trackings
+## Get Trackings
 
-```
+```http
 GET /trackings
+```
+
+Returns stored shipment information.
+
+---
+
+## AfterShip Webhook
+
+```http
+POST /webhooks/aftership
+```
+
+Receives shipment status events.
+
+---
+
+# Project Structure
+
+```text
+aftership-dashboard/
+
+├── apps/
+│
+│   ├── web/
+│   │   └── Next.js frontend
+│   │
+│   └── api/
+│       └── Express backend
+│
+├── packages/
+│
+│   └── db/
+│       └── Prisma schema + database client
+│
+├── docker-compose.yml
+├── .env.example
+└── README.md
 ```
 
 ---
 
-# Webhooks (Required)
+# Tech Stack
 
-To receive real-time updates, configure a webhook in your AfterShip dashboard:
+## Frontend
 
+- Next.js
+- React
+- TypeScript
+
+## Backend
+
+- Node.js
+- Express.js
+
+## Database
+
+- PostgreSQL
+- Prisma ORM
+
+## Infrastructure
+
+- Docker
+
+## External Services
+
+- AfterShip API
+- Webhooks
+
+---
+
+# Engineering Highlights
+
+This project demonstrates:
+
+- event-driven architecture
+- third-party API integration
+- webhook processing
+- REST API design
+- relational database modeling
+- full-stack development
+- containerized local environments
+
+---
+
+# Design Decisions
+
+## Webhooks Over Polling
+
+Shipment status updates are received asynchronously.
+
+Advantages:
+
+- reduced API requests
+- near real-time updates
+- better scalability
+
+---
+
+## Backend API Boundary
+
+The frontend never communicates directly with AfterShip.
+
+Instead:
+
+```text
+Frontend
+
+↓
+
+Backend
+
+↓
+
+External Provider
 ```
-http://your-server/webhooks/aftership
+
+Benefits:
+
+- API key security
+- centralized business logic
+- easier provider replacement
+
+---
+
+## Persistent Event History
+
+Tracking events are stored rather than overwritten.
+
+This enables:
+
+- shipment timelines
+- analytics
+- auditing
+
+---
+
+# Setup Instructions
+
+## Install Dependencies
+
+```bash
+npm install
 ```
 
+---
 
+## Configure Environment
 
-# Database
+Create:
 
-The app uses Prisma with PostgreSQL.
-
-To run migrations manually:
-
+```text
+.env
 ```
+
+Example:
+
+```env
+DATABASE_URL=your_database_url
+AFTERSHIP_API_KEY=your_api_key
+```
+
+---
+
+## Run Database Migration
+
+```bash
 npx prisma migrate dev
 ```
 
 ---
 
-# How it works
+## Start Development Environment
 
-1. You create a tracking via the dashboard
-2. Backend sends it to AfterShip
-3. AfterShip monitors shipment status
-4. Webhooks send updates to your backend
-5. Data is stored in PostgreSQL
-6. Frontend reads from your API
+Using Docker:
+
+```bash
+docker compose up
+```
 
 ---
 
-# Important Notes
+# Important Considerations
 
-* Do NOT call AfterShip directly from the frontend
-* Always use webhooks instead of polling
-* Ensure your webhook endpoint is publicly accessible
-* Handle duplicate tracking numbers properly
+Production deployments should handle:
+
+- webhook signature verification
+- duplicate webhook events
+- retry failures
+- API rate limits
+- background processing
 
 ---
 
 # Future Improvements
 
-*  Authentication (multi-user support)
-*  Analytics dashboard (delivery times, failures)
-*  Notifications (email / Slack)
-*  Search & filtering
-*  Real-time UI (WebSockets)
+## User Features
 
+- authentication
+- multi-user accounts
+- saved shipments
+- notification preferences
 
+---
+
+## Analytics
+
+- delivery performance metrics
+- carrier comparisons
+- failure analysis
+- shipment trends
+
+---
+
+## Real-Time Experience
+
+- WebSocket dashboard updates
+- live notification system
+- activity streams
+
+---
+
+## Infrastructure
+
+- message queue integration
+- Redis caching
+- cloud deployment
+- CI/CD pipeline
+
+---
+
+# What This Project Demonstrates
+
+AfterShip Tracking Dashboard demonstrates practical experience with:
+
+- backend API development
+- event-driven systems
+- external service integration
+- database-backed applications
+- full-stack engineering
+- scalable application design
+
+---
+
+# License
+
+MIT License
