@@ -1,27 +1,35 @@
 const prisma = require("../../../packages/db");
-const aftership = require("../lib/aftership");
+const ship24 = require("../lib/ship24");
 
 exports.createTracking = async (req, res) => {
-  const { slug, trackingNumber } = req.body;
+  const { trackingNumber, courierCode } = req.body;
 
   try {
-    await aftership.post("/trackings", {
-      tracking: {
-        slug,
-        tracking_number: trackingNumber,
+    const response = await ship24.post("/v1/trackers", {
+      trackingNumber,
+      courierCode,
+    });
+
+    const tracker = response.data.data;
+
+    await prisma.tracking.create({
+      data: {
+        trackingNumber,
+        ship24TrackerId: tracker.trackerId,
+        status: "Pending",
       },
     });
 
-    res.json({ success: true });
+    res.status(201).json({
+      success: true,
+      tracker,
+    });
   } catch (err) {
-    res.status(500).json(err.response?.data || err.message);
+    console.error(err.response?.data || err.message);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to create tracking",
+    });
   }
-};
-
-exports.getTrackings = async (req, res) => {
-  const data = await prisma.tracking.findMany({
-    orderBy: { updatedAt: "desc" },
-  });
-
-  res.json(data);
 };

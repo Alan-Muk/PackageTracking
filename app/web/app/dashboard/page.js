@@ -2,18 +2,22 @@ import { getTrackings } from "@/lib/api";
 import AddTracking from "../components/AddTracking";
 
 export default async function Dashboard() {
-  const data = await getTrackings();
+  const trackings = await getTrackings();
 
   return (
-    <div>
+    <main>
       <h1>Tracking Dashboard</h1>
+
       <AddTracking />
 
-      {data.map((t) => (
-        <div key={t.id}>
-          <strong>{t.trackingNumber}</strong> — {t.status}
-        </div>
-      ))}
-    </div>
+      <div>
+        {trackings.map((tracking) => (
+          <div key={tracking.id}>
+            <strong>{tracking.trackingNumber}</strong> —{" "}
+            {tracking.status ?? "Pending"}
+          </div>
+        ))}
+      </div>
+    </main>
   );
 }

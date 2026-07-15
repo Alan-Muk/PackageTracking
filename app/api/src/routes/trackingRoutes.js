@@ -8,5 +8,6 @@ const {
 
 router.get("/", getTrackings);
 router.post("/", createTracking);
+app.post("/webhooks/ship24", webhookHandler);
 
 module.exports = router;
