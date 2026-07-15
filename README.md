@@ -1,4 +1,4 @@
-# AfterShip Tracking Dashboard
+# Shipment Tracking Dashboard
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=nextdotjs)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
@@ -26,13 +26,13 @@ Built using:
 - PostgreSQL
 - Prisma
 - Docker
-- AfterShip API
+- Ship24 API
 
 ---
 
 # Overview
 
-AfterShip Tracking Dashboard provides a centralized interface for managing and monitoring shipments.
+Ship24 Tracking Dashboard provides a centralized interface for managing and monitoring shipments.
 
 The application workflow:
 
@@ -49,7 +49,7 @@ Express API
 
       ↓
 
-AfterShip Integration
+Ship24 Integration
 
       ↓
 
@@ -99,7 +99,7 @@ This project explores how event-driven systems solve these challenges.
 
                  ↓              ↓
 
-        AfterShip API       PostgreSQL
+        Ship24 API       PostgreSQL
 
                  
 
@@ -143,7 +143,7 @@ Responsibilities:
 
 ---
 
-## AfterShip Integration
+## Ship24 Integration
 
 Provides:
 
@@ -151,7 +151,7 @@ Provides:
 - carrier communication
 - delivery status updates
 
-The application communicates with AfterShip through:
+The application communicates with Ship24 through:
 
 - API requests for tracking creation
 - webhooks for status changes
@@ -187,7 +187,7 @@ Prisma provides:
 
             ↓
 
-3. AfterShip monitors shipment
+3. Ship24 monitors shipment
 
             ↓
 
@@ -293,7 +293,7 @@ Returns stored shipment information.
 
 ---
 
-## AfterShip Webhook
+## Ship24 Webhook
 
 ```http
 POST /webhooks/aftership
@@ -306,7 +306,7 @@ Receives shipment status events.
 # Project Structure
 
 ```text
-aftership-dashboard/
+Ship24-dashboard/
 
 ├── apps/
 │
@@ -352,7 +352,7 @@ aftership-dashboard/
 
 ## External Services
 
-- AfterShip API
+- Ship24 API
 - Webhooks
 
 ---
@@ -387,7 +387,7 @@ Advantages:
 
 ## Backend API Boundary
 
-The frontend never communicates directly with AfterShip.
+The frontend never communicates directly with Ship24.
 
 Instead:
 
@@ -445,7 +445,7 @@ Example:
 
 ```env
 DATABASE_URL=your_database_url
-AFTERSHIP_API_KEY=your_api_key
+Ship24_API_KEY=your_api_key
 ```
 
 ---
@@ -519,7 +519,7 @@ Production deployments should handle:
 
 # What This Project Demonstrates
 
-AfterShip Tracking Dashboard demonstrates practical experience with:
+Ship24 Tracking Dashboard demonstrates practical experience with:
 
 - backend API development
 - event-driven systems
